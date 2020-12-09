@@ -6,6 +6,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="com.lisz"/>
+    <!-- 前缀后缀用来在web目录下面找页面文件 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/page/" />
         <property name="suffix" value=".jsp" />
