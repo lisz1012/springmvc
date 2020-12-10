@@ -7,13 +7,25 @@
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <!-- 设置初始化参数，制定默认的springmvc的配置文件 -->
+        <!-- 设置初始化参数，制定默认的springmvc的配置文件
+        可以将springmvc的配置文件添加到/WEB-INF/的目录下。默认是从此目录下找配置文件
+        但是需要注意的是，配置文件的名称必须是（DispatcherServlet的servlet-name)-servlet.xml-->
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:springmvc.xml</param-value>
         </init-param>
     </servlet>
-    <!-- 添加前端控制器对应的mapping映射： 因此所有的请求，因此最好写成/ （不是/*） -->
+    <!-- 添加前端控制器对应的mapping映射： 因此所有的请求，因此最好写成/ （不是/*）
+    /：用来匹配所有的请求，但是/不会拦截jsp页面
+    /*：用来匹配所有的请求，但是会拦截jsp页面，
+    推荐使用/
+    此时如果创建了一个html页面之后是无法请求到的，原因如下：
+    每个项目的web.xml文件会继承tomcat下的web.xml文件，而在tomcat的 web.xml文件中包含了一个
+    DefaultServlet的处理累，用来处理静态资源，但是我们在便携自己的DispatcherServlet的时候，
+    用了/的方式，此方式覆盖了父web.xml对于静态资源的处理，所以此时所有的静态资源的访问，也需要由DispatcherServlet来处理，
+    但是我们并没有设置对应的Controller，所以404。
+    为什么jso能处理呢？因为在父web.xml文件中包含了一个JspServlet的处理类，会由Tomcat处理，而不是由我们定义的DispatcherServlet
+    处理-->
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
